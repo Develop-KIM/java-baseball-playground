@@ -8,7 +8,6 @@ import static messages.InputViewMessages.USER_INPUT;
 
 public class InputViewImpl implements InputView {
 
-
     private Scanner scanner;
 
     public InputViewImpl() {

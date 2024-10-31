@@ -13,7 +13,11 @@ public class ResultViewImpl implements ResultView {
     @Override
     public void displayResult(int strike, int ball) {
         StringBuilder resultMessage = new StringBuilder();
+        resultAppend(strike, ball, resultMessage);
+        System.out.println(resultMessage.toString().trim());
+    }
 
+    private static void resultAppend(int strike, int ball, StringBuilder resultMessage) {
         if (ball > ZERO) {
             resultMessage.append(ball).append(BALL);
         }
@@ -24,7 +28,6 @@ public class ResultViewImpl implements ResultView {
         if (resultMessage.length() == ZERO) {
             resultMessage.append(NOTHING);
         }
-        System.out.println(resultMessage.toString().trim());
     }
 
     private static void hasContent(StringBuilder resultMessage) {

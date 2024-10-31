@@ -18,10 +18,10 @@ public class StringCalculator {
 
     public StringCalculator() {
         operators = new HashMap<>();
-        operators.put("+", (firstNumber, secondNumber) -> firstNumber +  secondNumber);
-        operators.put("*", (firstNumber, secondNumber) -> firstNumber * secondNumber);
-        operators.put("-", (firstNumber, secondNumber) -> firstNumber - secondNumber);
-        operators.put("/", (firstNumber, secondNumber) -> firstNumber / secondNumber);
+        operators.put("+", (first, second) -> first + second);
+        operators.put("*", (first, second) -> first * second);
+        operators.put("-", (first, second) -> first - second);
+        operators.put("/", (first, second) -> first / second);
     }
 
     public int calculate(String input) {

@@ -1,19 +1,59 @@
+import service.BaseballGame;
+import ui.input.InputView;
+import ui.output.ResultView;
+
 import java.util.*;
+
+import static constants.GameConstants.*;
+import static messages.InputViewMessages.REPLAY;
 
 public class Baseball {
 
-    private static final int MAX_NUMBER = 9;
-    private static final int MIN_NUMBER = 1;
-    private static final int NUMBER_COUNT = 3;
+    private final InputView inputView;
+    private final ResultView resultView;
+    private final BaseballGame baseballGame;
 
-    public List<Integer> baseball() {
-        Random random = new Random();
-        Set<Integer> computer = new HashSet<>();
+    public Baseball(InputView inputView, ResultView resultView, BaseballGame baseballGame) {
+        this.inputView = inputView;
+        this.resultView = resultView;
+        this.baseballGame = baseballGame;
+    }
 
-        while (computer.size() < NUMBER_COUNT) {
-            computer.add(random.nextInt(MAX_NUMBER) + MIN_NUMBER);
+    public void play() {
+        boolean continuePlaying = true;
+
+        while (continuePlaying) {
+            runGameLoop();
+            continuePlaying = askForReplay();
         }
+        inputView.close();
+    }
 
-        return new ArrayList<>(computer);
+    private boolean askForReplay() {
+        return inputView.askReplay().equals(REPLAY.toString());
+    }
+
+    private void runGameLoop() {
+        List<Integer> computerNumbers = baseballGame.computerNumbers();
+        boolean gameEnded = false;
+
+        while (!gameEnded) {
+            List<Integer> userNumbers = baseballGame.userNumbers(inputView.userInput());
+            if (userNumbers.isEmpty()) {
+                continue;
+            }
+            long[] results = baseballGame.compareNumbers(computerNumbers, userNumbers);
+            resultView.displayResult((int) results[1], (int) results[0]);
+
+            gameEnded = checkGameEndCondition(results);
+        }
+    }
+
+    private boolean checkGameEndCondition(long[] results) {
+        boolean isGameEnded = results[1] == NUMBER_COUNT;
+        if (isGameEnded) {
+            resultView.gameOver();
+        }
+        return isGameEnded;
     }
 }

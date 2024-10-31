@@ -25,6 +25,6 @@ public class StringCalculatorTest {
 
     @Test
     void calculator() {
-        assertEquals(10, calculator.calculate("2 + 3 * 4 / 2"));
+        assertEquals(24, calculator.calculate("8 + 4 * 4 / 2"));
     }
 }
